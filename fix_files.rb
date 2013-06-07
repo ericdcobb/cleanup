@@ -1,5 +1,6 @@
+clean_directory =  "#{ARGV[0]}/**/*".gsub("\\","/" )
 
-entries = Dir.glob("#{ARGV[0]}/**/*")
+entries = Dir.glob(clean_directory)
 
 entries.each do |item|
 	next if item.eql? '.' or item.eql? '..' or File.directory? item
