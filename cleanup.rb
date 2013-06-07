@@ -18,6 +18,8 @@ delete_date = DateTime.now - max_age
 file_count = 0
 total_bytes_to_clean = 0
 
+dry_run = ARGV[4].eql? "dry"
+
 entries = Dir.glob(clean_directory)
 entries.each do |item|
 	next if item.eql? '.' or item.eql? '..'
@@ -30,8 +32,15 @@ entries.each do |item|
 
 	puts "File Name: #{item} " 
 	puts "File Size: #{ File.size? item} "
+	if !dry_run
+		File.delete item
+	end
 end
 
 total_gigs =  9.31323e-10 * total_bytes_to_clean
 
 puts "Cleaned #{file_count} files to save #{total_gigs} gigs."
+if dry_run
+	puts "(dry run)"
+
+end
